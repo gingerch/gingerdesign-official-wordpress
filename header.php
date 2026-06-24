@@ -71,7 +71,7 @@
     <?php if (!$args['isBlankPage']): ?>
     <header class="header-main">
         <div class="container">
-            <h1>
+            <div class="site-logo">
                 <a href="/">
                     <?php
                         $logo = 'logo';
@@ -81,7 +81,7 @@
                     ?>
                     <img src="<?= esc_url( get_template_directory_uri() ) ?>/img/<?=$logo?>.svg" alt="Ginger Design">
                 </a>
-            </h1>
+            </div>
             <nav class="nav-main">
                 <ul>
                     <li class="<?php if($currentUrl['path'] === '/projects/') echo 'active'; ?>">
