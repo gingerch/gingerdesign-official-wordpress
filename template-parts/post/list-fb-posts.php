@@ -1,5 +1,5 @@
 <?php
-    $fbPosts = json_decode(getFBPosts(4, 0))->data;
+    $fbPosts = json_decode(getFBPosts(4, 0))->data ?? null;
 ?>
 
 <?php if ($fbPosts): ?>

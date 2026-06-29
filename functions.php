@@ -70,7 +70,7 @@ function get_first_tag($postID) {
 function get_feature_image($postID) {
     $img = get_default_image();
     $images = wp_get_attachment_image_src( get_post_thumbnail_id($postID), 'single-post-thumbnail' );
-    if ($images[0]) $img = $images[0];
+    if (!empty($images[0])) $img = $images[0];
     return $img;
 }
 
@@ -109,7 +109,7 @@ function isServiceCategory() {
     );
     $terms = get_terms($taxonomies, $args);
     $current_category = get_queried_object();
-    $current_cat_id = $current_category->term_id;
+    $current_cat_id = $current_category->term_id ?? null;
     return in_array($current_cat_id, array_column($terms, 'term_id'));
 }
 
