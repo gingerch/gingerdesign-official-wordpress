@@ -2,7 +2,7 @@
 <?php
     $category_slug = $args['category_slug'];
     $num = $args['num'];
-    $more = $args['more'];
+    $more = $args['more'] ?? false;
     $category = get_category_by_slug($category_slug);
     $categoryLink = get_category_link($category->term_id);
     $postItemClass = 'col-12 col-lg-6';
@@ -12,10 +12,10 @@
 <div class="" id="<?=$category_slug?>">
     <header class="header-page">
         <div class="container">
-            <h1>
+            <h2>
                 <?=$category_slug?>
                 <span><?=$category->name?></span>
-            </h1>
+            </h2>
             <p><?=$category->description?></p>
             <?php if($more): ?>
             <a href="<?=$categoryLink?>" class="more">

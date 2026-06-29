@@ -11,10 +11,10 @@
 <div class="" id="<?=$category_slug?>">
     <header class="header-page">
         <div class="container">
-            <h1>
+            <h2>
                 <?=$category_slug?>
                 <span><?=$category->name?></span>
-            </h1>
+            </h2>
             <p><?=$category->description?></p>
             <a href="<?=$categoryLink?>" class="more">
                 <?php get_template_part('template-parts/svg/arrow-right');?>

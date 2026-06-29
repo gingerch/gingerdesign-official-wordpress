@@ -1,6 +1,6 @@
 </main>
 
-<?php if (!$args['isBlankPage']): ?>
+<?php if (empty($args['isBlankPage'])): ?>
     <div class="footer-main">
         <?php get_template_part('/template-parts/svg/footer-logo'); ?>
         <h2>野薑設計科技有限公司</h2>
@@ -43,7 +43,7 @@
 
 </div><!-- #page -->
 
-<?php if (!$args['isBlankPage']): ?>
+<?php if (empty($args['isBlankPage'])): ?>
 
 <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js" integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/aos@next/dist/aos.js"></script>

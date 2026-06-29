@@ -1,15 +1,15 @@
 <?php
-    $id = $_GET['id'];
+    $id = $_GET['id'] ?? null;
     $fbPost = null;
     $fbPosts = null;
     if ($id) {
         $fbPost = json_decode(getFBPost($id));
     }
     if (!$fbPost) {
-        $offset = (int) $_GET['offset'];
+        $offset = (int) ($_GET['offset'] ?? 0);
         $fbPostData = json_decode(getFBPosts(9, $offset));
-        $fbPosts = $fbPostData->data;
-        $paging = $fbPostData->paging;
+        $fbPosts = $fbPostData->data ?? [];
+        $paging = $fbPostData->paging ?? null;
     }
     get_header();
 ?>
@@ -17,7 +17,7 @@
 <div class="mb-5">
     <div class="container">
         <header class="header-category text-center pt-5">
-            <h2 class="mb-4">開業日記 Crafters' Posts</h2>
+            <?php if($fbPost): ?><h2 class="mb-4">開業日記 Crafters' Posts</h2><?php else: ?><h1 class="mb-4">開業日記 Crafters' Posts</h1><?php endif; ?>
             <?php if(!$fbPost): ?>
                 <p class="mb-0">即時與臉書粉專同步 Sync with our facebook，<br>歡迎追蹤我們！ welcome to follow us。</p>
             <?php endif; ?>

@@ -13,7 +13,7 @@ usort($terms, fn($a, $b) => get_field('cat_order', $b) - get_field('cat_order', 
 ?>
 
 <header class="header-page">
-    <h1>Service<span>服務項目</span></h1>
+    <?php if (is_home()): ?><h2>Service<span>服務項目</span></h2><?php else: ?><h1>Service<span>服務項目</span></h1><?php endif; ?>
     <p>從小型登陸頁到大型正式網站，<br>野薑致力於提供高品質設計給您。</p>
 </header>
 <ul class="list-service row gx-md-5">

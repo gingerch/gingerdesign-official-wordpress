@@ -16,6 +16,7 @@ get_header();
                     <img src="<?= esc_url( get_template_directory_uri() ) ?>/img/index-welcome.svg" alt="歡迎來到野薑設計工作室">
                 </div>
                 <div class="col-12 col-lg-7 order-lg-1">
+                    <h1 class="index-welcome-h1">結合商業美感的網站設計、內容系統與 AI 工具</h1>
                     <h2><pre><?=$title?></pre></h2>
                     <div class="desc"><pre><?=$desc?></pre></div>
                 </div>
@@ -49,7 +50,7 @@ get_header();
     <div class="index-box">
         <header class="header-page">
             <div class="container">
-                <h1>Feedback<span>客戶回饋</span></h1>
+                <h2>Feedback<span>客戶回饋</span></h2>
                 <p>從小型登陸頁到大型正式網站，<br>野薑致力於提供高品質設計給您。</p>
             </div>
         </header>
@@ -71,10 +72,10 @@ get_header();
     <div class="index-box">
         <header class="header-page">
             <div class="container">
-                <h1>
+                <h2>
                     Clients
                     <span>客戶品牌</span>
-                </h1>
+                </h2>
                 <p>我們合作客戶，都是很棒的人，設計也為他們創造價值，歡迎加入我們！</p>
             </div>
         </header>
@@ -90,10 +91,10 @@ get_header();
     <div class="index-box" id="homeedm">
         <header class="header-page mb-0">
             <div class="container">
-                <h1>
+                <h2>
                     You
                     <span>有興趣嗎？為你事業打造一個家吧！</span>
-                </h1>
+                </h2>
                 <p>打造事業的家，需要一份藍圖，我們已經為您準備好了，填寫 Email 領取您網站藍圖吧！</p>
             </div>
         </header>

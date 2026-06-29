@@ -68,7 +68,7 @@
 <?php endif; ?>
 
 <div id="page" class="site <?php if (is_home()) echo 'home'; ?>">
-    <?php if (!$args['isBlankPage']): ?>
+    <?php if (empty($args['isBlankPage'])): ?>
     <header class="header-main">
         <div class="container">
             <div class="site-logo">
