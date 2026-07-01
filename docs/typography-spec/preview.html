@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<title>Typography Preview — 野薑設計 v2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="typography.css">
+<style>
+	body {
+		font-family: 'Montserrat', 'Noto Sans TC', sans-serif;
+		font-size: 16px;
+		color: #3e3e3e;
+		background: #f8f8f8;
+		max-width: 720px;
+		margin: 40px auto;
+		padding: 0 20px 80px;
+	}
+	.label {
+		font-family: monospace;
+		font-size: 12px;
+		color: #999;
+		background: #efefef;
+		padding: 2px 6px;
+		border-radius: 3px;
+		margin-left: 8px;
+		vertical-align: middle;
+		letter-spacing: 0;
+	}
+	hr { border: 0; border-top: 1px solid #ddd; margin: 32px 0; }
+	.sample-p-block p { margin: 0 0 18px; }
+</style>
+</head>
+<body>
+
+<h1>Typography Preview<span class="label">H1 · 2.25rem · lh 130% · ls 10%</span></h1>
+<p>野薑設計官網 typography spec v2，2026-07-01 定案。適用一般中英混排網站。以下為各層級的呈現效果，可對照設計稿與其他站台的閱讀感。</p>
+
+<hr>
+
+<h2>H2 標題示範<span class="label">H2 · 1.75rem · lh 130% · ls 10%</span></h2>
+<p>H2 常用於文章區塊分節、頁面主要區塊標題。字級 28px、與 H1 相比不搶眼但仍能建立層次。</p>
+
+<h3>H3 標題示範<span class="label">H3 · 1.375rem · lh 130% · ls 10%</span></h3>
+<p>H3 適合次區塊、卡片標題、文章內小節。字級 22px。</p>
+
+<h4>H4 標題示範<span class="label">H4 · 1.25rem · lh 150% · ls 10%</span></h4>
+<p>H4 起改用 lh 150%，讓中等字級的多行標題透氣。字級 20px。</p>
+
+<h5>H5 標題示範<span class="label">H5 · 1.125rem · lh 150% · ls 10%</span></h5>
+<p>H5 用在較細部的分類、表單 label。字級 18px。</p>
+
+<h6>H6 標題示範<span class="label">H6 · 1rem · lh 185% · ls 10%</span></h6>
+<p>H6 與內文同字級但為 Bold，lh 也對齊內文，讓小標題自然融入段落節奏。</p>
+
+<hr>
+
+<div class="sample-p-block">
+	<h3>內文段落閱讀感<span class="label">p · 1rem · lh 200% · ls 5%</span></h3>
+	<p>某年冬天，專程赴東歐旅遊的我，為了瞭解二戰遺緒，特別繞行德國，前往紐倫堡探訪。在第二次世界大戰後的國際法秩序重建中，紐倫堡大審確認了戰爭、危害人類與種族滅絕的罪刑法度，為當代國際人權奠定法治判準。</p>
+	<p>身為一個亞洲人，站在紐倫堡大審的法庭，靠著耳機傳來的導覽介紹，簡單辨識法庭裡的審判細節，我既感遙遠又帶著漠然。儘管如此，看著寒冬時期仍站滿看台的觀光客，我還是不由得肯認紐倫堡大審在世人心中留下的正向地位。</p>
+	<p>內文行距 200% 與字距 5% 的組合是本規範刻意留窄的閱讀密度：中文段落太鬆會拖慢閱讀，過緊則吃力，這個數值介於 The Reporter（211% / ~3%）與一般 WordPress theme（150% / 0%）之間。</p>
+</div>
+
+<hr>
+
+<h4>註解與 small 字級<span class="label">small · 0.875rem · lh 185% · ls 10%</span></h4>
+<p>圖說或註解用 <small>small 標籤，字級 14px、行距 185%、字距 10%</small>。適用於圖片說明、時間戳記、次要資訊。</p>
+
+</body>
+</html>
