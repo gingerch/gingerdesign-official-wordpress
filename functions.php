@@ -140,16 +140,14 @@ add_action( 'template_redirect', 'ginger_lazyload_start', 1 );
 
 function ginger_lazyload_transform( $html ) {
     $upload      = wp_upload_dir();
-    $uploads_url = $upload['baseurl'];  // e.g. https://gingerdesign.com.tw/wp-content/uploads
     $uploads_dir = $upload['basedir'];  // e.g. /var/www/html/wp-content/uploads
-    $webpc_url   = str_replace( '/uploads', '/uploads-webpc/uploads', $uploads_url );
     $webpc_dir   = str_replace( '/uploads', '/uploads-webpc/uploads', $uploads_dir );
 
     return preg_replace_callback(
         '/<img\b([^>]*)>/i',
-        function ( $m ) use ( $uploads_url, $uploads_dir, $webpc_url, $webpc_dir ) {
-            $attrs   = $m[1];
-            $skip    = ( strpos( $attrs, 'data-no-lazy' ) !== false );
+        function ( $m ) use ( $uploads_dir, $webpc_dir ) {
+            $attrs = $m[1];
+            $skip  = ( strpos( $attrs, 'data-no-lazy' ) !== false );
 
             if ( ! $skip ) {
                 if ( strpos( $attrs, 'loading=' ) === false ) {
@@ -160,7 +158,6 @@ function ginger_lazyload_transform( $html ) {
                 }
             }
 
-            // 抽 src，判斷是否要包 <picture> 加 WebP source
             if ( ! preg_match( '/\bsrc="([^"]+)"/i', $attrs, $sm ) ) {
                 return '<img' . $attrs . '>';
             }
@@ -168,17 +165,24 @@ function ginger_lazyload_transform( $html ) {
             if ( ! preg_match( '/\.(png|jpe?g)(\?|$)/i', $src ) ) {
                 return '<img' . $attrs . '>';
             }
-            if ( strpos( $src, $uploads_url ) !== 0 ) {
+            // 抓 /wp-content/uploads/... 的 path 部分（不管 scheme / host，
+            // 避免 wp_upload_dir baseurl 與實際頁面 scheme 不同時 strpos 失敗）
+            if ( ! preg_match( '#/wp-content/uploads/([^"?]+)#', $src, $pm ) ) {
                 return '<img' . $attrs . '>';
             }
+            $rel_path = $pm[1];  // e.g. 2026/04/01-Cover.png
 
-            // 對應的 WebP URL 與檔案路徑
-            $webp_url  = str_replace( $uploads_url, $webpc_url, $src ) . '.webp';
-            $webp_file = str_replace( $uploads_url, $webpc_dir, preg_replace( '/\?.*$/', '', $src ) ) . '.webp';
-
+            $webp_file = $webpc_dir . '/' . $rel_path . '.webp';
             if ( ! file_exists( $webp_file ) ) {
                 return '<img' . $attrs . '>';
             }
+
+            $webp_url = preg_replace(
+                '#/wp-content/uploads/#',
+                '/wp-content/uploads-webpc/uploads/',
+                preg_replace( '/\?.*$/', '', $src ),
+                1
+            ) . '.webp';
 
             return sprintf(
                 '<picture><source type="image/webp" srcset="%s"><img%s></picture>',
