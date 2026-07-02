@@ -13,7 +13,7 @@ get_header();
         <div class="container px-4">
             <div class="row">
                 <div class="col-12 col-lg-4 order-lg-2 offset-lg-1 mb-5 mb-lg-0">
-                    <img src="<?= esc_url( get_template_directory_uri() ) ?>/img/index-welcome.svg" alt="歡迎來到野薑設計工作室">
+                    <img src="<?= esc_url( get_template_directory_uri() ) ?>/img/index-welcome.svg" alt="歡迎來到野薑設計工作室" data-no-lazy fetchpriority="high">
                 </div>
                 <div class="col-12 col-lg-7 order-lg-1">
                     <h1 class="index-welcome-h1">結合商業美感的網站設計、內容系統與 AI 工具</h1>

@@ -127,3 +127,30 @@ function get_faq() {
     );
     return $data;
 }
+
+// 全域 lazy loading：所有 <img> 加上 loading="lazy" + decoding="async"，
+// 需保持 eager 的圖（首屏 hero）在 template 內加 data-no-lazy 屬性即可跳過。
+function ginger_lazyload_start() {
+    ob_start( 'ginger_lazyload_transform' );
+}
+add_action( 'template_redirect', 'ginger_lazyload_start', 1 );
+
+function ginger_lazyload_transform( $html ) {
+    return preg_replace_callback(
+        '/<img\b([^>]*)>/i',
+        function ( $m ) {
+            $attrs = $m[1];
+            if ( strpos( $attrs, 'data-no-lazy' ) !== false ) {
+                return '<img' . $attrs . '>';
+            }
+            if ( strpos( $attrs, 'loading=' ) === false ) {
+                $attrs .= ' loading="lazy"';
+            }
+            if ( strpos( $attrs, 'decoding=' ) === false ) {
+                $attrs .= ' decoding="async"';
+            }
+            return '<img' . $attrs . '>';
+        },
+        $html
+    );
+}
