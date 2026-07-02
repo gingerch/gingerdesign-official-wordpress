@@ -128,28 +128,63 @@ function get_faq() {
     return $data;
 }
 
-// 全域 lazy loading：所有 <img> 加上 loading="lazy" + decoding="async"，
-// 需保持 eager 的圖（首屏 hero）在 template 內加 data-no-lazy 屬性即可跳過。
+// 全域圖片優化：
+// 1) 所有 <img> 加 loading="lazy" + decoding="async"（首屏用 data-no-lazy 排除）
+// 2) uploads/ 內的 png/jpg 若有對應 WebP 檔就包 <picture> 加 WebP source
+//    （不用 htaccess Accept 條件，避免 Cloudflare 因不完全支援 Vary: Accept 造成
+//     邊緣 cache 供錯格式的問題）
 function ginger_lazyload_start() {
     ob_start( 'ginger_lazyload_transform' );
 }
 add_action( 'template_redirect', 'ginger_lazyload_start', 1 );
 
 function ginger_lazyload_transform( $html ) {
+    $upload      = wp_upload_dir();
+    $uploads_url = $upload['baseurl'];  // e.g. https://gingerdesign.com.tw/wp-content/uploads
+    $uploads_dir = $upload['basedir'];  // e.g. /var/www/html/wp-content/uploads
+    $webpc_url   = str_replace( '/uploads', '/uploads-webpc/uploads', $uploads_url );
+    $webpc_dir   = str_replace( '/uploads', '/uploads-webpc/uploads', $uploads_dir );
+
     return preg_replace_callback(
         '/<img\b([^>]*)>/i',
-        function ( $m ) {
-            $attrs = $m[1];
-            if ( strpos( $attrs, 'data-no-lazy' ) !== false ) {
+        function ( $m ) use ( $uploads_url, $uploads_dir, $webpc_url, $webpc_dir ) {
+            $attrs   = $m[1];
+            $skip    = ( strpos( $attrs, 'data-no-lazy' ) !== false );
+
+            if ( ! $skip ) {
+                if ( strpos( $attrs, 'loading=' ) === false ) {
+                    $attrs .= ' loading="lazy"';
+                }
+                if ( strpos( $attrs, 'decoding=' ) === false ) {
+                    $attrs .= ' decoding="async"';
+                }
+            }
+
+            // 抽 src，判斷是否要包 <picture> 加 WebP source
+            if ( ! preg_match( '/\bsrc="([^"]+)"/i', $attrs, $sm ) ) {
                 return '<img' . $attrs . '>';
             }
-            if ( strpos( $attrs, 'loading=' ) === false ) {
-                $attrs .= ' loading="lazy"';
+            $src = $sm[1];
+            if ( ! preg_match( '/\.(png|jpe?g)(\?|$)/i', $src ) ) {
+                return '<img' . $attrs . '>';
             }
-            if ( strpos( $attrs, 'decoding=' ) === false ) {
-                $attrs .= ' decoding="async"';
+            if ( strpos( $src, $uploads_url ) !== 0 ) {
+                return '<img' . $attrs . '>';
             }
-            return '<img' . $attrs . '>';
+
+            // 對應的 WebP URL 與檔案路徑
+            $webp_url  = str_replace( $uploads_url, $webpc_url, $src ) . '.webp';
+            $webp_file = str_replace( $uploads_url, $webpc_dir, preg_replace( '/\?.*$/', '', $src ) ) . '.webp';
+
+            if ( ! file_exists( $webp_file ) ) {
+                return '<img' . $attrs . '>';
+            }
+
+            return sprintf(
+                '<picture><source type="image/webp" srcset="%s"><img%s></picture>',
+                esc_url( $webp_url ),
+                $attrs
+            );
         },
         $html
     );
