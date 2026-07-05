@@ -34,6 +34,17 @@ add_action('after_setup_theme', 'my_theme_setup');
 
 function remove_useless_source() {
 	wp_deregister_script('jquery');
+
+	// 匿名前台不需要 WP 內建的區塊/後台 CSS
+	if ( is_admin() || is_user_logged_in() ) {
+		return;
+	}
+	wp_dequeue_style( 'dashicons' );                // 37KB，只 admin bar 需要
+	wp_dequeue_style( 'wp-block-library' );         // Gutenberg block library
+	wp_dequeue_style( 'wp-block-library-theme' );
+	wp_dequeue_style( 'classic-themes' );           // classic theme fallback
+	wp_dequeue_style( 'global-styles' );            // 6.1+ theme.json inline styles
+	wp_dequeue_style( 'ck-quicktags' );             // ConvertKit 後台的 quicktags CSS 誤跑到前台
 }
 add_action('wp_enqueue_scripts', 'remove_useless_source', 100);
 
