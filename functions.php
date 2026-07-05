@@ -44,7 +44,7 @@ function remove_useless_source() {
 	wp_dequeue_style( 'wp-block-library-theme' );
 	wp_dequeue_style( 'classic-themes' );           // classic theme fallback
 	wp_dequeue_style( 'global-styles' );            // 6.1+ theme.json inline styles
-	wp_dequeue_style( 'ck-quicktags' );             // ConvertKit 後台的 quicktags CSS 誤跑到前台
+	wp_dequeue_style( 'convertkit-admin-quicktags' ); // ConvertKit 後台的 quicktags CSS 誤跑到前台
 }
 add_action('wp_enqueue_scripts', 'remove_useless_source', 100);
 
