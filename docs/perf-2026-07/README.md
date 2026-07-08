@@ -30,14 +30,19 @@
 
 **成果**：origin cache HIT TTFB **2.7ms**（原 100ms）。
 
-### 3. CF edge cache HTML（**待使用者手動設定**）
-- 看 [CF-cache-rule.md](./CF-cache-rule.md) — Cloudflare 儀表板逐步指南。
-- 預期：CF cache HIT TTFB 全球 ~50-100ms（原 550-670ms）。
-- 完成後真實訪客感受第一次載入速度大幅改善。
+### 3. CF edge cache HTML（**2026-07-08 已設定完成，走 API**）
+- 規格照 [CF-cache-rule.md](./CF-cache-rule.md)，改用 Cloudflare Rulesets API 建立
+  （zone `23973be1b4da1a0527d64ecc846ca1ba`，ruleset `b84f2bac70634bd5abc83c13f44a01c8`，
+  phase `http_request_cache_settings`，rule「Cache HTML pages」）。
+- API token（Zone Read + Cache Rules Edit + Cache Purge）存在本機
+  `~/.cloudflare/gingerdesign.env`（`CF_API_TOKEN` + `ZONE_ID`）。
+
+**成果**（2026-07-08 實測）：
+- 首頁/文章頁 MISS → HIT 正常；HIT 後 TTFB **~170-230ms**（原 ~550ms，-60%+）。
+- 排除規則驗證通過：`/ho-tai`、`/wp-json`、`?s=` 搜尋皆 DYNAMIC 不快取。
 
 ## 待處理
 
-- **CF Cache Rule 手動設定**（見上）——這是剩下最大效能提升點。
 - **AVIF 圖檔（可選）**：目前只轉 WebP。若要再壓，可跑 `wp option update webpc_settings '{"output_formats":["webp","avif"]}' --format=json` 再 regenerate。多轉 30-60 分鐘、多省 20-30% 檔案大小。
 - **CF API 自動 purge**（可選）：發文時自動打 CF API 清 edge cache，取代 2h TTL 等待。
 - **清 2022 年老舊素材**（141MB uploads/2022 大多可能沒在用）——風險高、要一張張確認。

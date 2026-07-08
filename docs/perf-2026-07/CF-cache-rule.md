@@ -1,5 +1,10 @@
 # Cloudflare Cache Rule 設定指南
 
+> **狀態：2026-07-08 已完成**（用 Rulesets API 設定，非儀表板手動；規格同本文件）。
+> Ruleset `b84f2bac70634bd5abc83c13f44a01c8` / rule 「Cache HTML pages」。
+> API token 在本機 `~/.cloudflare/gingerdesign.env`。實測 HIT TTFB ~170-230ms。
+> 本文件保留作為規格紀錄與 rollback 參考。
+
 **目的**：把首頁與文章頁的 HTML cache 在 Cloudflare 邊緣，把 TTFB 從 ~550ms 打到 ~50-100ms（全球）。
 
 **前置**：
