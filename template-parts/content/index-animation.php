@@ -9,4 +9,4 @@
     </div>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.7.13/lottie.min.js"></script>
+<script src="<?= esc_url( get_template_directory_uri() ) ?>/js/vendor/lottie.min.js?<?= filemtime( get_template_directory() . '/js/vendor/lottie.min.js' ) ?>"></script>

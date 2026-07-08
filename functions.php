@@ -45,6 +45,21 @@ function remove_useless_source() {
 	wp_dequeue_style( 'classic-themes' );           // classic theme fallback
 	wp_dequeue_style( 'global-styles' );            // 6.1+ theme.json inline styles
 	wp_dequeue_style( 'convertkit-admin-quicktags' ); // ConvertKit 後台的 quicktags CSS 誤跑到前台
+
+	// post-views-counter 前台 CSS 只有單篇文章/頁面在顯示瀏覽數時需要；
+	// 列表 / 首頁 / 封存 / 搜尋頁不顯示瀏覽數，不必載。
+	if ( ! is_singular() ) {
+		wp_dequeue_style( 'post-views-counter-frontend' );
+	}
+
+	// ConvertKit 前台 CSS 只有內容含 ConvertKit 表單的單篇頁需要（全站僅 1 頁）。
+	$queried  = get_queried_object();
+	$has_form = is_singular()
+		&& isset( $queried->post_content )
+		&& strpos( $queried->post_content, 'convertkit' ) !== false;
+	if ( ! $has_form ) {
+		wp_dequeue_style( 'convertkit-frontend' );
+	}
 }
 add_action('wp_enqueue_scripts', 'remove_useless_source', 100);
 

@@ -62,7 +62,6 @@
     <!-- 字型收斂：只載實際使用的 Montserrat 400/700 + Noto Sans TC 400/700（Roboto 未使用已移除） -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Noto+Sans+TC:wght@400;700&display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined">
-    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <link rel="stylesheet" href="<?= esc_url( get_template_directory_uri() ) ?>/style.css?<?= filemtime( get_template_directory() . '/style.css' ) ?>" />
     <?php if ( is_home() ): ?>
     <!-- Preload LCP element：Lottie hero 主背景圖 -->
