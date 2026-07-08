@@ -60,6 +60,27 @@ npx purgecss --css /tmp/bs.css --content '<抓下來的html>/*.html' '<主題>/*
 ```
 （2026-07-08 那次的驗證腳本邏輯：抓 170 頁 sitemap 全量 HTML，43 個使用中 class 全保留。）
 
+### 5. Mobile 第三方瘦身 + 條件式 dequeue（2026-07-09，commit bad77e4）
+- **移除 AOS**（css+js）：全站掃 170 頁 0 處 `data-aos`、js 也無 `AOS.init`，純死重量。unpkg.com 網域（原 ×4 請求）消失。
+- **lottie 5.7.13 自家主機化**：原 cdnjs → 主題 `js/vendor/lottie.min.js`（僅首頁 hero 用）。
+- **jQuery 3.6.0 slim 自家主機化**：原 code.jquery.com → `js/vendor/jquery-3.6.0.slim.min.js`
+  （下載後用官方 SRI `sha256-u7e5...05RI=` 驗證位元組吻合）。main.js（type=module）仍靠全域 `$`，
+  classic script 先於 module 執行，順序不變。
+- **條件式 dequeue 外掛 CSS**（functions.php `remove_useless_source()`）：
+  - `post-views-counter-frontend` 只在 `is_singular()` 載入（列表/首頁/封存不顯示瀏覽數）。
+  - `convertkit-frontend` 只在單篇且 `post_content` 含 `convertkit` 時載入（全站僅 1 頁 scenario_of_officialwebsite）。
+
+**成果**（2026-07-09 實測）：
+- 關鍵路徑第三方網域 `cdnjs.cloudflare.com` / `code.jquery.com` / `unpkg.com` 全消失；
+  剩下的第三方（FB/LINE/AdSense/Google）都是使用者互動後才載的 deferred tracker，不阻塞渲染。
+- 首頁 render-blocking `<link stylesheet>` 7 → **4**（bootstrap / google fonts / material icons / style.css）。
+- Console 錯誤 0（首頁 Lottie 動畫、jQuery 皆正常）；observedLCP ~2.2s。
+- **Lab mobile score 55 持平**：mobile 分數卡在 Lottie hero 的模擬 LCP（CPU/渲染受限、非網路受限），
+  這些網路優化動不了它——真實 Field data（CrUX）才是實際使用者體感，且早已全綠。
+
+**⚠️ vendor 檔更新提醒**：lottie / jQuery 是釘死版本的本地副本。若日後要升級，重新下載到 `js/vendor/`
+並（jQuery）用官方 SRI 驗證後再 commit；header/footer 用 filemtime 破快取，不必手動改版本號。
+
 ## 待處理
 
 - **AVIF 圖檔（可選）**：目前只轉 WebP。若要再壓，可跑 `wp option update webpc_settings '{"output_formats":["webp","avif"]}' --format=json` 再 regenerate。多轉 30-60 分鐘、多省 20-30% 檔案大小。
