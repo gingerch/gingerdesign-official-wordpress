@@ -54,7 +54,13 @@
             src="https://tr.line.me/tag.gif?c_t=lap&t_id=299420f4-b7ee-4f96-b243-c4fa8c70f23f&e=pv&noscript=1" />
     </noscript>
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <!-- Bootstrap：PurgeCSS 產出的本站專用子集（10KB，原 CDN 全量 163KB）。
+         重新產生方式見 docs/perf-2026-07/README.md；新增 Bootstrap class 時記得重跑 purge -->
+    <link rel="stylesheet" href="<?= esc_url( get_template_directory_uri() ) ?>/css/bootstrap.min.css?<?= filemtime( get_template_directory() . '/css/bootstrap.min.css' ) ?>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- 字型收斂：只載實際使用的 Montserrat 400/700 + Noto Sans TC 400/700（Roboto 未使用已移除） -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Noto+Sans+TC:wght@400;700&display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined">
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <link rel="stylesheet" href="<?= esc_url( get_template_directory_uri() ) ?>/style.css?<?= filemtime( get_template_directory() . '/style.css' ) ?>" />
