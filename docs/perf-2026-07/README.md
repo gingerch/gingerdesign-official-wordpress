@@ -41,6 +41,25 @@
 - 首頁/文章頁 MISS → HIT 正常；HIT 後 TTFB **~170-230ms**（原 ~550ms，-60%+）。
 - 排除規則驗證通過：`/ho-tai`、`/wp-json`、`?s=` 搜尋皆 DYNAMIC 不快取。
 
+### 4. Bootstrap purge + Google Fonts 收斂（2026-07-08，commit 1e753d5）
+- **Bootstrap**：CDN 全量 163KB → PurgeCSS 本站專用子集 **10KB**，存主題 `css/bootstrap.min.css`
+  （header.php 以 filemtime 版本號載入，少一個第三方 render-blocking 請求）。
+- **Google Fonts**：砍掉全站未使用的 Roboto 400/700 與 Montserrat 200，
+  只留 Montserrat 400/700 + Noto Sans TC 400/700；載入方式從 style.css `@import`（串行）
+  改成 header.php `<link>` + preconnect（並行）。
+- **成果**：observedLoad ~1.3s → **~0.66s**；Bootstrap 從 Lighthouse unused-css 名單消失；
+  server response 90ms（CF cache rule 生效後）。Lab score 55 持平（受模擬 4G 節流噪音影響）。
+
+**⚠️ 新增 Bootstrap class 時要重跑 purge**，流程：
+```bash
+# 1. 抓全站頁面 HTML（從 sitemap 收 URL）+ 下載全量 bootstrap
+curl -s https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css -o /tmp/bs.css
+# 2. 以「線上全站 HTML + 主題 PHP + js/main.js」為掃描來源跑 PurgeCSS
+npx purgecss --css /tmp/bs.css --content '<抓下來的html>/*.html' '<主題>/**/*.php' '<主題>/js/main.js' -o css/
+# 3. 驗證：比對頁面上實際 class ∩ bootstrap class ⊆ purged class，然後 commit
+```
+（2026-07-08 那次的驗證腳本邏輯：抓 170 頁 sitemap 全量 HTML，43 個使用中 class 全保留。）
+
 ## 待處理
 
 - **AVIF 圖檔（可選）**：目前只轉 WebP。若要再壓，可跑 `wp option update webpc_settings '{"output_formats":["webp","avif"]}' --format=json` 再 regenerate。多轉 30-60 分鐘、多省 20-30% 檔案大小。
