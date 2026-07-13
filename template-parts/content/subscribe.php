@@ -10,11 +10,11 @@
                     <form action="https://api-backend.app.newsleopard.com/api/contacts/subscribe/<?=$mailID?>/verify" method="POST" target="popupwindow" onsubmit="return nl_1554802646254.subscribe()" id="sub-form" class="content active">
                         <div class="input-wrap">
                             <div class="">
-                                <label>Name</label>
+                                <label for="sub-name">Name</label>
                                 <input id="sub-name" class="sub-inputs" name="name" required style="width: 150px;">
                             </div>
                             <div class="">
-                                <label>Email</label>
+                                <label for="sub-mail">Email</label>
                                 <input type="email" id="sub-mail" class="sub-inputs" name="email" required style="width: 330px;">
                                 <span>＊填寫正確，才會收到小禮物喔！</span>
                             </div>

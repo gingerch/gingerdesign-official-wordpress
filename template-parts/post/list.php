@@ -15,7 +15,7 @@
                 <?=$category->description?>
                 <span><?=$category->name?></span>
             </h2>
-            <a href="<?=$categoryLink?>" class="more">
+            <a href="<?=$categoryLink?>" class="more" aria-label="查看更多<?=esc_attr($category->name)?>">
                 <?php get_template_part('template-parts/svg/arrow-right');?>
             </a>
         </header>

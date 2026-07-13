@@ -56,9 +56,9 @@ get_header();
         </header>
         <div class="container">
             <div class="row gy-4">
-                <?php foreach($feedbacks as $feed): ?>
+                <?php $feedIndex = 0; foreach($feedbacks as $feed): $feedIndex++; ?>
                 <div class="col-12 col-lg-4">
-                    <a href="<?=$feed['link']?>">
+                    <a href="<?=$feed['link']?>" aria-label="查看客戶好評 <?=$feedIndex?>">
                         <img src="<?=$feed['img']['url']?>" alt="" class="w-100">
                     </a>
                 </div>

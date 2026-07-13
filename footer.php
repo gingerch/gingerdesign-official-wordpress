@@ -4,20 +4,20 @@
     <div class="footer-main">
         <?php get_template_part('/template-parts/svg/footer-logo'); ?>
         <h2>野薑設計科技有限公司</h2>
-        <h4>統編: 93563601</h4>
+        <p class="footer-taxid">統編: 93563601</p>
         <ul class="list-social">
             <li class="facebook">
-                <a href="https://www.facebook.com/GingerDesignUIUX" target="_blank" rel="noopener noreferrer">
+                <a href="https://www.facebook.com/GingerDesignUIUX" target="_blank" rel="noopener noreferrer" aria-label="Facebook（另開新視窗）">
                     <?php get_template_part('/template-parts/svg/facebook'); ?>
                 </a>
             </li>
             <li class="instagram">
-                <a href="https://instagram.com/gingerdesigntw?igshid=MmIzYWVlNDQ5Yg==" target="_blank" rel="noopener noreferrer">
+                <a href="https://instagram.com/gingerdesigntw?igshid=MmIzYWVlNDQ5Yg==" target="_blank" rel="noopener noreferrer" aria-label="Instagram（另開新視窗）">
                     <?php get_template_part('/template-parts/svg/instagram'); ?>
                 </a>
             </li>
             <li class="line">
-                <a href="https://lin.ee/XYfFeH7" target="_blank" rel="noopener noreferrer">
+                <a href="https://lin.ee/XYfFeH7" target="_blank" rel="noopener noreferrer" aria-label="LINE（另開新視窗）">
                     <?php get_template_part('/template-parts/svg/line'); ?>
                 </a>
             </li>
@@ -34,9 +34,9 @@
     <div id="img-show"><img id="img-show-img" src=""></div>
     <div id="btns-fixed">
         <ul>
-            <li><a href="#page"><span class="material-icons">keyboard_arrow_up</span></a></li>
-            <li><a href="https://lin.ee/u7j7mWJ" target="_blank"><?php get_template_part('/template-parts/svg/line-simple'); ?></a></li>
-            <li><a href="https://www.messenger.com/t/2068633876694243/?messaging_source=source%3Apages%3Amessage_shortlink&source_id=1441792" target="_blank"><?php get_template_part('/template-parts/svg/messenger'); ?></a></li>
+            <li><a href="#page" aria-label="回到頁面頂端"><span class="material-icons">keyboard_arrow_up</span></a></li>
+            <li><a href="https://lin.ee/u7j7mWJ" target="_blank" aria-label="用 LINE 聯絡我們（另開新視窗）"><?php get_template_part('/template-parts/svg/line-simple'); ?></a></li>
+            <li><a href="https://www.messenger.com/t/2068633876694243/?messaging_source=source%3Apages%3Amessage_shortlink&source_id=1441792" target="_blank" aria-label="用 Messenger 聯絡我們（另開新視窗）"><?php get_template_part('/template-parts/svg/messenger'); ?></a></li>
         </ul>
     </div>
 <?php endif; ?>
