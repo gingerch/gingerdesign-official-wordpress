@@ -32,6 +32,44 @@ function my_theme_setup(){
 }
 add_action('after_setup_theme', 'my_theme_setup');
 
+// 提供 /llms.txt（llmstxt.org 標準）給 AI 代理讀取網站導覽。
+// 需為 Markdown、含一個 H1、包含連結。掛在 init 早於 WP canonical 301，
+// 設 text/plain 並擋 Cache Enabler，避免被當 HTML 頁快取。
+function ginger_serve_llms_txt() {
+    $path = trim( (string) parse_url( $_SERVER['REQUEST_URI'] ?? '', PHP_URL_PATH ), '/' );
+    if ( $path !== 'llms.txt' ) {
+        return;
+    }
+    if ( ! defined( 'DONOTCACHEPAGE' ) ) {
+        define( 'DONOTCACHEPAGE', true );
+    }
+    header( 'Content-Type: text/plain; charset=utf-8' );
+    header( 'Cache-Control: public, max-age=3600' );
+    echo <<<'LLMS'
+# 野薑設計 Ginger Design
+
+> 野薑設計是一間美感數位工作室，主張「商業美感」——讓感性也能決定商業結果。核心服務涵蓋美感網站設計、銷售漏斗、內容品牌系統、AI 工具，以及醫師個人品牌網站。
+
+野薑設計科技有限公司位於台中市西區民權路219號2樓，營業時間週一至週五 10:00–18:00，聯絡信箱 contact@gingerdesign.com.tw。
+
+## 主要頁面
+
+- [首頁](https://gingerdesign.com.tw/)：美感網站設計與內容品牌系統的官方網站
+- [關於我們](https://gingerdesign.com.tw/about/)：野薑設計的理念、團隊與「商業美感」主張
+- [服務項目](https://gingerdesign.com.tw/service/)：美感網站設計、銷售漏斗、內容品牌系統、AI 工具
+- [作品案例](https://gingerdesign.com.tw/category/projects/)：過往設計專案與客戶案例
+- [部落格](https://gingerdesign.com.tw/blog/)：網站設計、品牌經營與 AI 工具相關文章
+- [聯絡我們](https://gingerdesign.com.tw/contact/)：諮詢與合作洽詢
+
+## 其他
+
+- [網站地圖 Sitemap](https://gingerdesign.com.tw/sitemap.xml)：全站頁面 XML 索引
+
+LLMS;
+    exit;
+}
+add_action( 'init', 'ginger_serve_llms_txt' );
+
 function remove_useless_source() {
 	wp_deregister_script('jquery');
 
