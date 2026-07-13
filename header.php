@@ -18,6 +18,11 @@
         gtag('config', 'G-YSVCVM9QTW');
     </script>
 
+    <!-- LINE Tag 佇列 stub：LINE Tag 本體延後載入，但頁面（如首頁轉換事件、訂閱表單）
+         可能在載入前就呼叫 _lt()。先同步定義佇列函式，讓這些呼叫先進 _ltq 排隊、
+         不拋 ReferenceError；lt.js 於 loadDeferred 載入後會接手處理佇列。 -->
+    <script>window._ltq=window._ltq||[];window._lt=window._lt||function(){window._ltq.push(arguments)};</script>
+
     <!-- 延後載入的第三方追蹤：使用者第一次互動或 3 秒後才觸發，避免阻塞 LCP -->
     <script>
     (function(){
