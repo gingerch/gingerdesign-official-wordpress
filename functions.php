@@ -70,6 +70,61 @@ LLMS;
 }
 add_action( 'init', 'ginger_serve_llms_txt' );
 
+// 單篇文章的 BlogPosting 結構化資料（補 Google rich result）。
+// 首頁的 Organization/LocalBusiness 由 mu-plugin ginger-schema.php 輸出；此處只處理文章。
+function ginger_article_schema() {
+    if ( ! is_singular( 'post' ) ) {
+        return;
+    }
+    $post = get_queried_object();
+    if ( empty( $post->ID ) ) {
+        return;
+    }
+
+    $logo_id = get_theme_mod( 'custom_logo' );
+    $logo    = $logo_id ? wp_get_attachment_image_url( $logo_id, 'full' ) : 'https://gingerdesign.com.tw/wp-content/uploads/2022/08/og-img.png';
+    $permalink = get_permalink( $post );
+
+    // 描述：優先用 slim-seo 手填，否則用文章摘要
+    $meta = get_post_meta( $post->ID, 'slim_seo', true );
+    $desc = ( is_array( $meta ) && ! empty( $meta['description'] ) )
+        ? $meta['description']
+        : wp_strip_all_tags( get_the_excerpt( $post ) );
+    $desc = trim( mb_substr( (string) $desc, 0, 300 ) );
+
+    $data = array(
+        '@context'         => 'https://schema.org',
+        '@type'            => 'BlogPosting',
+        '@id'              => $permalink . '#article',
+        'mainEntityOfPage' => array( '@type' => 'WebPage', '@id' => $permalink ),
+        'headline'         => wp_strip_all_tags( get_the_title( $post ) ),
+        'datePublished'    => get_the_date( 'c', $post ),
+        'dateModified'     => get_the_modified_date( 'c', $post ),
+        'author'           => array(
+            '@type' => 'Organization',
+            'name'  => '野薑設計 GingerDesign',
+            'url'   => 'https://gingerdesign.com.tw/',
+        ),
+        'publisher'        => array(
+            '@type' => 'Organization',
+            'name'  => '野薑設計 GingerDesign',
+            'logo'  => array( '@type' => 'ImageObject', 'url' => $logo ),
+        ),
+    );
+    if ( $desc !== '' ) {
+        $data['description'] = $desc;
+    }
+    if ( has_post_thumbnail( $post ) ) {
+        $img = wp_get_attachment_image_url( get_post_thumbnail_id( $post ), 'full' );
+        if ( $img ) {
+            $data['image'] = $img;
+        }
+    }
+
+    echo "\n<script type=\"application/ld+json\">" . wp_json_encode( $data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES ) . "</script>\n";
+}
+add_action( 'wp_head', 'ginger_article_schema', 20 );
+
 function remove_useless_source() {
 	wp_deregister_script('jquery');
 
