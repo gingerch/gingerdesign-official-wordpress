@@ -22,8 +22,8 @@ get_header();
                     <br>在野薑，科技的價值，不是讓人做得更有效率，而是減少重複的勞動，聰明的經營事業，將時間留給重要的人。
                     <br>因此，我們持續實驗網站系統、AI、各種槓桿，協助品牌主累積長期的數位資產。
                     <br>讓每一次投入，不只完成眼前的工作，而是能持續產生價值。
-                    <br>逐步創造從容、有餘裕的人生。
-                    <br>- Work with Ease, Live with Space</div>
+                    <div class="desc-signoff">逐步創造從容、有餘裕的人生。
+                    <br>- Work with Ease, Live with Space</div></div>
                 </div>
             </div>
         </div>
