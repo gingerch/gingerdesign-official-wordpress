@@ -14,7 +14,7 @@ get_header();
                     <img src="<?= esc_url( get_template_directory_uri() ) ?>/img/index-welcome.svg" alt="歡迎來到野薑設計工作室" data-no-lazy fetchpriority="high">
                 </div>
                 <div class="col-12 col-lg-7 order-lg-1">
-                    <h1 class="index-welcome-h1">結合商業美感的網站設計、內容系統與 AI 工具</h1>
+                    <h1 class="index-welcome-h1">網站設計、AI agent、內容行銷</h1>
                     <?php // 首頁 welcome 主文案：已脫離 ACF，直接改下面文字與 <br> 換行即可；樣式在 sass/index.sass 的 .index-welcome h2 / .desc ?>
                     <h2>讓事業持續成長，也讓生活留有餘裕。
                     <br>
