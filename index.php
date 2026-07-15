@@ -1,8 +1,6 @@
 <?php
 $homeDataPage = get_page_by_path('home-data');
 $feedbacks = get_field('feedbacks', $homeDataPage->ID);
-$title = get_field('title', $homeDataPage->ID);
-$desc = get_field('desc', $homeDataPage->ID);
 $clientsImgDesktop = get_field('clients_img_desktop', $homeDataPage->ID);
 $clientsImgMobile = get_field('clients_img_mobile', $homeDataPage->ID);
 get_header();
@@ -17,8 +15,17 @@ get_header();
                 </div>
                 <div class="col-12 col-lg-7 order-lg-1">
                     <h1 class="index-welcome-h1">結合商業美感的網站設計、內容系統與 AI 工具</h1>
-                    <h2><pre><?=$title?></pre></h2>
-                    <div class="desc"><pre><?=$desc?></pre></div>
+                    <?php // 首頁 welcome 主文案：已脫離 ACF，直接改下面文字與 <br> 換行即可；樣式在 sass/index.sass 的 .index-welcome h2 / .desc ?>
+                    <h2>讓事業持續成長，也讓生活留有餘裕。
+                    <br>
+                    <br>野薑運用科技，
+                    <br>陪你打造更從容的經營方式。</h2>
+                    <div class="desc">我們是一間以數位科技與商業美感，為世界創造「從容餘裕」的工作室。
+                    <br>在野薑，科技的價值，不是讓人做得更有效率，而是減少重複的勞動，聰明的經營事業，將時間留給重要的人。
+                    <br>因此，我們持續實驗網站系統、AI、各種槓桿，協助品牌主累積長期的數位資產。
+                    <br>讓每一次投入，不只完成眼前的工作，而是能持續產生價值。
+                    <br>逐步創造從容、有餘裕的人生。
+                    <br>- Work with Ease, Live with Space</div>
                 </div>
             </div>
         </div>
