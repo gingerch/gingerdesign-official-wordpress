@@ -82,6 +82,7 @@
 					padding: 8px 20px
 					color: $main
 					font-size: 18px
+					white-space: nowrap
 					text-decoration: none
 					transition: .4s
 					&:hover
@@ -89,6 +90,15 @@
 					.material-icons
 						position: relative
 						top: 4px
+		// 992–1199px（例如 1152 螢幕）：container 只有 960px，
+		// 扣掉 padding 剩 848px，logo 180 + 選單 668 剛好塞滿沒餘裕 → 選單會掉字換行。
+		// 這區間縮小 padding 與 margin 挪出約 140px 空間。
+		+lxl
+			ul
+				li
+					margin-left: 8px
+					a
+						padding: 8px 10px
 
 .btn-nav-main
 	margin: 0 0 0 auto
