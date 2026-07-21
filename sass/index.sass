@@ -34,6 +34,9 @@
 			max-width: 630px
 	.desc-signoff
 		text-align: right
+		// 與上一段拉開一行：內文行高 200%（16px*2=32px），故 2rem = 剛好一行
+		// 註：這裡不能用 <br> 拉開，因為它緊鄰 block 元素、不會產生可見空行
+		margin-top: 2rem
 
 .index-box
 	border-bottom: 1px solid $gold-light
