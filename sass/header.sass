@@ -76,7 +76,9 @@
 				&.highlight
 					a
 						background-color: $gold-light
-						color: $gray-dark
+						color: $contact-btn-text
+						&:hover
+							color: $contact-btn-text
 				a
 					display: block
 					padding: 8px 20px
@@ -147,9 +149,12 @@
 		+lg
 			> ul
 				> li
-					&:last-child
+					// 聯絡我們（金色按鈕）在深色主題也維持深色字，避免白字壓在金底上
+					&.highlight
 						> a
-							color: $gray-dark
+							color: $contact-btn-text
+							&:hover
+								color: $contact-btn-text
 					> a
 						color: #fff
 	.btn-nav-main
