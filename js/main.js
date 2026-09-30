@@ -1,4 +1,7 @@
 import { animationData } from './animation.js'
+import { initProjectHero } from './project-hero.js'
+
+initProjectHero();
 
 if ($('#lottieRef').length) {
     var params = {

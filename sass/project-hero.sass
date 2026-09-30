@@ -1,0 +1,95 @@
+// 成功案例頁 Hero 輪播（Figma 7420:821 project_hero）
+// 結構見 template-parts/post/project-hero.php；行為見 js/project-hero.js
+// 圖區 1200:772 比例、cover 裁切；圓點靠右；標題副標靠左。
+
+.project-hero
+	margin: 0 0 40px
+	+md
+		margin: 0 0 60px
+
+	&__viewport
+		overflow: hidden
+		aspect-ratio: 1200 / 772
+		background-color: #d9d9d9
+		position: relative
+
+	&__track
+		display: flex
+		height: 100%
+		transition: transform .6s ease
+		will-change: transform
+		&.is-dragging
+			transition: none
+
+	&__slide
+		flex: 0 0 100%
+		width: 100%
+		height: 100%
+
+	&__link
+		display: block
+		height: 100%
+		img, picture
+			display: block
+			width: 100%
+			height: 100%
+			object-fit: cover
+
+	&__dots
+		display: flex
+		justify-content: flex-end
+		gap: 8px
+		margin: 20px 0 0
+		padding: 0
+
+	&__dot
+		width: 10px
+		height: 10px
+		border-radius: 50%
+		border: 0
+		padding: 0
+		background-color: $gold-light
+		cursor: pointer
+		transition: background-color .3s
+		&.is-active
+			background-color: $main
+
+	&__captions
+		position: relative
+		margin-top: 16px
+		+md
+			margin-top: 24px
+
+	&__caption
+		display: none
+		&.is-active
+			display: block
+
+	&__title
+		font-size: 20px
+		line-height: 1.5
+		letter-spacing: .1em
+		font-weight: 700
+		margin: 0
+		color: #000
+		+md
+			font-size: 24px
+		a
+			color: inherit
+			text-decoration: none
+			&:hover
+				color: $main
+
+	&__subtitle
+		font-size: 14px
+		line-height: 1.85
+		letter-spacing: .1em
+		color: $gray
+		margin: 8px 0 0
+		+md
+			font-size: 16px
+
+// 使用者關閉動態效果時不做位移動畫
+@media (prefers-reduced-motion: reduce)
+	.project-hero__track
+		transition: none

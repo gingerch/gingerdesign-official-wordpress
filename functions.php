@@ -312,3 +312,120 @@ function ginger_lazyload_transform( $html ) {
         $html
     );
 }
+
+// ============================================================
+// 成功案例 Hero 輪播（/category/projects/ 頁首）
+// ACF 欄位群組寫在程式碼裡、隨主題 git 部署，只掛在 projects 這個分類的編輯頁。
+// Repeater `project_hero`：每列 image（圖卡）+ post（作品文章，Post Object 單選）。
+// 標題／副標不另設欄位，前台自動帶所選文章的標題與子分類名。
+// 模板：template-parts/post/project-hero.php；樣式：sass/project-hero.sass；JS：js/project-hero.js
+// ============================================================
+function ginger_register_project_hero_fields() {
+    if ( ! function_exists( 'acf_add_local_field_group' ) ) {
+        return;
+    }
+    $projects = get_category_by_slug( 'projects' );
+    if ( ! $projects ) {
+        return;
+    }
+    acf_add_local_field_group( array(
+        'key'    => 'group_project_hero',
+        'title'  => '成功案例 Hero 輪播',
+        'fields' => array(
+            array(
+                'key'          => 'field_project_hero',
+                'label'        => 'Hero 圖卡',
+                'name'         => 'project_hero',
+                'type'         => 'repeater',
+                'instructions' => '每列一張圖卡，拖拉調整順序。圖卡建議 2400×1544（比例 1200:772），前台會裁切填滿。標題與副標會自動帶入所選作品的標題與分類，不用另填。',
+                'layout'       => 'block',
+                'button_label' => '新增圖卡',
+                'sub_fields'   => array(
+                    array(
+                        'key'           => 'field_project_hero_image',
+                        'label'         => '圖卡',
+                        'name'          => 'image',
+                        'type'          => 'image',
+                        'required'      => 1,
+                        'return_format' => 'array',
+                        'preview_size'  => 'medium',
+                        'library'       => 'all',
+                    ),
+                    array(
+                        'key'           => 'field_project_hero_post',
+                        'label'         => '連到哪篇作品',
+                        'name'          => 'post',
+                        'type'          => 'post_object',
+                        'required'      => 1,
+                        'post_type'     => array( 'post' ),
+                        'taxonomy'      => array( 'category:projects' ),
+                        'return_format' => 'id',
+                        'multiple'      => 0,
+                        'allow_null'    => 0,
+                        'ui'            => 1,
+                    ),
+                ),
+            ),
+        ),
+        'location' => array(
+            array(
+                array(
+                    'param'    => 'taxonomy',
+                    'operator' => '==',
+                    'value'    => 'category',
+                ),
+            ),
+        ),
+        'menu_order' => 0,
+        'position'   => 'normal',
+        'active'     => true,
+    ) );
+}
+add_action( 'acf/init', 'ginger_register_project_hero_fields' );
+
+// 欄位群組的 location 只能指定「整個 category 分類法」，ACF 的 screen 參數也不帶 term id，
+// 所以這裡看編輯頁網址的 tag_ID：只有 projects 這個 term 的編輯頁才顯示（新增分類表單不顯示）。
+function ginger_project_hero_location_filter( $match, $rule, $screen, $field_group ) {
+    if ( ( $field_group['key'] ?? '' ) !== 'group_project_hero' || ! $match ) {
+        return $match;
+    }
+    $term_id  = absint( $_GET['tag_ID'] ?? 0 );
+    $projects = get_category_by_slug( 'projects' );
+    return $projects && $term_id === (int) $projects->term_id;
+}
+add_filter( 'acf/location/rule_match/taxonomy', 'ginger_project_hero_location_filter', 10, 4 );
+
+// 讀出 hero 圖卡，整理成模板好用的陣列；空的或 ACF 不在就回空陣列。
+// 每筆：img_url / img_alt / title / subtitle / link
+function ginger_get_project_hero( $term ) {
+    if ( ! function_exists( 'get_field' ) || ! $term ) {
+        return array();
+    }
+    $rows = get_field( 'project_hero', $term );
+    if ( empty( $rows ) || ! is_array( $rows ) ) {
+        return array();
+    }
+    $slides = array();
+    foreach ( $rows as $row ) {
+        $post_id = (int) ( $row['post'] ?? 0 );
+        $image   = $row['image'] ?? null;
+        if ( ! $post_id || empty( $image['url'] ) || get_post_status( $post_id ) !== 'publish' ) {
+            continue;
+        }
+        $cats = array();
+        foreach ( get_the_category( $post_id ) as $cat ) {
+            if ( $cat->slug !== 'projects' ) {
+                $cats[] = $cat->name;
+            }
+        }
+        $title    = get_the_title( $post_id );
+        $slides[] = array(
+            'img_url'  => $image['url'],
+            'img_alt'  => $image['alt'] ?: $title,
+            'title'    => $title,
+            'subtitle' => implode( ' - ', $cats ),
+            'link'     => get_permalink( $post_id ),
+        );
+    }
+    return $slides;
+}

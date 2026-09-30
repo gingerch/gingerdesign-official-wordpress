@@ -72,7 +72,7 @@
     <!-- Preload LCP element：Lottie hero 主背景圖 -->
     <link rel="preload" as="image" fetchpriority="high" type="image/webp" href="<?= esc_url( get_template_directory_uri() ) ?>/img/animation/image_5.webp">
     <!-- 讓 Lottie 主 JS 早點準備 -->
-    <link rel="modulepreload" href="<?= esc_url( get_template_directory_uri() ) ?>/js/main.js?20240317">
+    <link rel="modulepreload" href="<?= esc_url( get_template_directory_uri() ) ?>/js/main.js?<?= filemtime( get_template_directory() . '/js/main.js' ) ?>">
     <?php endif; ?>
     <?php $currentUrl = parse_url(home_url( $_SERVER['REQUEST_URI'], PHP_URL_PATH) );?>
 </head>
