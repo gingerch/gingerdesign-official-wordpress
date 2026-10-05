@@ -1,11 +1,13 @@
 // 成功案例頁 Hero 輪播（Figma 7420:821 project_hero）
 // 結構見 template-parts/post/project-hero.php；行為見 js/project-hero.js
-// 圖區 1200:772 比例、cover 裁切；圓點靠右；標題副標靠左。
+// 整塊最大寬 760px、在內容區水平置中（Figma 7420:815 為 760×489）；
+// 圖區維持 760:489（= 1200:772）比例、cover 裁切；圓點靠右；標題副標靠左。
 
 .project-hero
-	margin: 0 0 40px
+	max-width: 760px
+	margin: 0 auto 40px
 	+md
-		margin: 0 0 60px
+		margin: 0 auto 60px
 
 	&__viewport
 		overflow: hidden

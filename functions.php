@@ -337,7 +337,7 @@ function ginger_register_project_hero_fields() {
                 'label'        => 'Hero 圖卡',
                 'name'         => 'project_hero',
                 'type'         => 'repeater',
-                'instructions' => '每列一張圖卡，拖拉調整順序。圖卡建議 2400×1544（比例 1200:772），前台會裁切填滿。標題與副標會自動帶入所選作品的標題與分類，不用另填。',
+                'instructions' => '每列一張圖卡，拖拉調整順序。圖卡建議 1520×978（比例 760:489，前台顯示寬 760px 的 2 倍），前台會裁切填滿。標題與副標會自動帶入所選作品的標題與分類，不用另填。',
                 'layout'       => 'block',
                 'button_label' => '新增圖卡',
                 'sub_fields'   => array(

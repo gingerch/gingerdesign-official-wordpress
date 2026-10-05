@@ -24,7 +24,7 @@ $count = count( $slides );
                 <?php foreach ( $slides as $i => $slide ) : ?>
                 <div class="project-hero__slide" data-project-hero-slide aria-roledescription="slide" aria-label="<?= esc_attr( ( $i + 1 ) . ' / ' . $count ); ?>"<?= $i === 0 ? '' : ' aria-hidden="true"'; ?>>
                     <a href="<?= esc_url( $slide['link'] ); ?>" class="project-hero__link" aria-label="<?= esc_attr( $slide['title'] ); ?>">
-                        <img src="<?= esc_url( $slide['img_url'] ); ?>" alt="<?= esc_attr( $slide['img_alt'] ); ?>" width="1200" height="772"<?= $i === 0 ? ' data-no-lazy fetchpriority="high"' : ''; ?>>
+                        <img src="<?= esc_url( $slide['img_url'] ); ?>" alt="<?= esc_attr( $slide['img_alt'] ); ?>" width="760" height="489"<?= $i === 0 ? ' data-no-lazy fetchpriority="high"' : ''; ?>>
                     </a>
                 </div>
                 <?php endforeach; ?>
