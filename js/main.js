@@ -1,7 +1,9 @@
 import { animationData } from './animation.js'
 import { initProjectHero } from './project-hero.js'
+import { initContactForm } from './contact-form.js'
 
 initProjectHero();
+initContactForm();
 
 if ($('#lottieRef').length) {
     var params = {
