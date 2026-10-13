@@ -2,7 +2,11 @@
 $aboutPage = get_page_by_path('about');
 $title = get_field('title', $aboutPage->ID);
 $desc = get_field('desc', $aboutPage->ID);
-$team = get_field('team', $aboutPage->ID);
+$team = get_field('team', $aboutPage->ID) ?: [];
+// 「合作夥伴」名單：後台 ACF `team` 裡名字在此清單內的人會從「專業團隊」移到「合作夥伴」區塊。
+$partnerNames = ['Elsa', 'Alvin', 'Dana'];
+$partners = array_values(array_filter($team, fn($p) => in_array(trim($p['name']), $partnerNames, true)));
+$team = array_values(array_filter($team, fn($p) => !in_array(trim($p['name']), $partnerNames, true)));
 get_header();
 ?>
 
@@ -36,6 +40,22 @@ get_header();
             </div>
         </div>
     </div>
+    <?php if ($partners): ?>
+    <div class="box-about about-team py-5">
+        <div class="container">
+            <h2 class="title-lg text-center">合作夥伴</h2>
+            <div class="row gx-5 list-team">
+                <?php foreach($partners as $p): ?>
+                <div class="col-12 col-lg-3 mb-4">
+                    <img src="<?=$p['img']['sizes']['thumbnail']?>" alt="<?=$p['name']?>">
+                    <h3><?=$p['name']?></h3>
+                    <h4><?=$p['job']?></h4>
+                </div>
+                <?php endforeach; ?>
+            </div>
+        </div>
+    </div>
+    <?php endif; ?>
     <div class="container text-center">
         <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfrZmyH9r2QDm64SKet-OK_5lCUHz6Aeua1pjltuJTuTMJj-g/viewform?embedded=true" width="640" height="3510" frameborder="0" marginheight="0" marginwidth="0">載入中…</iframe>
     </div>
