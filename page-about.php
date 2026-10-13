@@ -56,9 +56,6 @@ get_header();
         </div>
     </div>
     <?php endif; ?>
-    <div class="container text-center">
-        <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfrZmyH9r2QDm64SKet-OK_5lCUHz6Aeua1pjltuJTuTMJj-g/viewform?embedded=true" width="640" height="3510" frameborder="0" marginheight="0" marginwidth="0">載入中…</iframe>
-    </div>
 </div>
 
 <?php
