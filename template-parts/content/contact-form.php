@@ -182,7 +182,7 @@ $questions = [
             <button type="submit" class="btn btn-gold contact-form__submit" data-submit>
                 <span data-submit-label>送出諮詢</span>
             </button>
-            <p class="contact-form__note"><span class="contact-form__required">＊</span>為必填。送出後我們會在工作日內與您聯繫。</p>
+            <p class="contact-form__note"><span class="contact-form__required">＊</span>為必填。送出後我們會在 3 工作日內與您聯繫。</p>
         </div>
     </form>
 
