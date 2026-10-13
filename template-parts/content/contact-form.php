@@ -188,7 +188,7 @@ $questions = [
 
     <div class="contact-form__result contact-form__result--success" data-result-success hidden tabindex="-1">
         <h2 class="contact-form__result-title">我們已經收到您的需求</h2>
-        <p>謝謝您！野薑會在您方便的時段主動與您聯繫。<br>如果想先聊聊，也歡迎直接透過 Line 找我們。</p>
+        <p>謝謝您！野薑會在您方便的時段主動與您聯繫。<br>如果想先聊聊，也歡迎直接透過 <a href="https://lin.ee/u7j7mWJ" target="_blank" rel="noopener noreferrer">LINE</a> 找我們。</p>
     </div>
 
     <div class="contact-form__result contact-form__result--error" data-result-error hidden tabindex="-1">
